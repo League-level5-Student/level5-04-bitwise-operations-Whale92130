@@ -29,7 +29,20 @@ import org.junit.jupiter.api.Test;
 public class _02_Rotate {
     
     int rotateLeft(int value, int rotateAmount) {
-        return -1;
+    	String values = value+"";
+    	char[] bits = values.toCharArray();
+  
+    	for (int i = 0; i < rotateAmount; i++) {
+    		char temp = bits[0];
+    		bits[0] = bits[bits.length-1];
+    		bits[bits.length-1] = temp;
+    		
+    	}
+    	String output = "";
+    	for (int i = 0; i < bits.length; i++) {
+    		output = output + bits[i];
+    	}
+        return Integer.parseInt(output);
     }
     
     int rotateRight(int value, int rotateAmount) {
