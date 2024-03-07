@@ -2,6 +2,8 @@ package _02_AND_OR_and_XOR;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 /*
@@ -29,25 +31,63 @@ import org.junit.jupiter.api.Test;
 public class _02_Rotate {
     
     int rotateLeft(int value, int rotateAmount) {
-    	String values = value+"";
-    	char[] bits = values.toCharArray();
-  
-    	for (int i = 0; i < rotateAmount; i++) {
-    		char temp = bits[0];
-    		bits[0] = bits[bits.length-1];
-    		bits[bits.length-1] = temp;
+    	String binary = convertDecimalToBinary(value);
+    	char[] bits = binary.toCharArray();
+    	char first 
+    	for (int i = 0; i < bits.length; i++) {
+    		if(bits)
+    		char temp = bits[i];
+    		bits[i] = bits[i+1];
+    		bits[i+1] = temp;
     		
     	}
-    	String output = "";
-    	for (int i = 0; i < bits.length; i++) {
-    		output = output + bits[i];
-    	}
-        return Integer.parseInt(output);
+    	
+    	return -1;
     }
     
     int rotateRight(int value, int rotateAmount) {
-        return -1;
+    	return -1;
     }
+    public static String convertDecimalToBinary(int decimalNum) {
+        String binaryStr = "";
+
+        do {
+            // 1. Logical right shift by 1
+            int quotient = decimalNum >>> 1;
+
+            // 2. Check remainder and add '1' or '0'
+            if( decimalNum % 2 != 0 ){
+                binaryStr = '1' + binaryStr;
+            } else {
+                binaryStr = '0' + binaryStr;
+            }
+
+            decimalNum = quotient;
+
+            // 3. Repeat until number is 0
+        } while( decimalNum != 0 );
+
+        return binaryStr;
+    }
+    int convertBinaryStringToDecimalInt(String binStr) {
+		StringBuilder sb = new StringBuilder(binStr);
+		sb.reverse();
+		String binStr2 = sb.toString();
+		System.out.println(binStr2);
+		String[] bits = binStr2.split("");
+		int num = 0;
+		int power = 1;
+		for (int i = 0; i < bits.length; i++) {
+			if (bits[i].equals("1")) {
+				num+=power;
+			}
+			else if (bits[i].equals("0")){
+				num+=0;
+			}
+			power = power*2;
+		}
+		return num;
+	}
     
     @Test
     void testRotateLeft() {
