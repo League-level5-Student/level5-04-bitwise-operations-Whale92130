@@ -29,47 +29,82 @@ import org.junit.jupiter.api.Test;
  *      11111111 11111111 11111111 11110001   // rotate left by 1
  */
 public class _02_Rotate {
-    
-    int rotateLeft(int value, int rotateAmount) {
-    	String binary = convertDecimalToBinary(value);
-    	char[] bits = binary.toCharArray();
-    	char first 
-    	for (int i = 0; i < bits.length; i++) {
-    		if(bits)
-    		char temp = bits[i];
-    		bits[i] = bits[i+1];
-    		bits[i+1] = temp;
-    		
-    	}
-    	
-    	return -1;
-    }
-    
-    int rotateRight(int value, int rotateAmount) {
-    	return -1;
-    }
-    public static String convertDecimalToBinary(int decimalNum) {
-        String binaryStr = "";
 
-        do {
-            // 1. Logical right shift by 1
-            int quotient = decimalNum >>> 1;
+	int rotateLeft(int value, int rotateAmount) {
+		String binary = convertDecimalToBinary(value);
+		char[] bits = binary.toCharArray();
+		for (int o = 0; o < rotateAmount; o++) {
+			char first = bits[0];
+			for (int i = 0; i < bits.length - 1; i++) {
+				if (i == bits.length - 2) {
+					bits[bits.length - 2] = first;
+				}
+				char temp = bits[i];
+				bits[i] = bits[i + 1];
+				bits[i + 1] = temp;
 
-            // 2. Check remainder and add '1' or '0'
-            if( decimalNum % 2 != 0 ){
-                binaryStr = '1' + binaryStr;
-            } else {
-                binaryStr = '0' + binaryStr;
-            }
+			}
+		}
 
-            decimalNum = quotient;
+		String output = "";
+		for (int i = 0; i < bits.length; i++) {
+			output += bits[i];
+		}
+		System.out.println("Output left: " + output);
+		return convertBinaryStringToDecimalInt(output);
+	}
 
-            // 3. Repeat until number is 0
-        } while( decimalNum != 0 );
+	int rotateRight(int value, int rotateAmount) {
+		System.out.println("value: " + value);
+		String binary = "00000000000000000000000000000" + convertDecimalToBinary(value);
+		System.out.println("Binary String: " + binary);
 
-        return binaryStr;
-    }
-    int convertBinaryStringToDecimalInt(String binStr) {
+		char[] bits = binary.toCharArray();
+		for (int o = 0; o < rotateAmount; o++) {
+			for (int p = 0; p < bits.length-1; p++) {
+				char first = bits[0];
+				for (int i = 0; i < bits.length - 1; i++) {
+					if (i == bits.length - 2) {
+						bits[bits.length - 2] = first;
+					}
+					char temp = bits[i];
+					bits[i] = bits[i + 1];
+					bits[i + 1] = temp;
+				}
+			}
+		}
+
+		String output = "";
+		for (int i = 0; i < bits.length; i++) {
+			output += bits[i];
+		}
+		System.out.println("Output left: " + output);
+		return convertBinaryStringToDecimalInt(output);
+	}
+
+	public static String convertDecimalToBinary(int decimalNum) {
+		String binaryStr = "";
+
+		do {
+			// 1. Logical right shift by 1
+			int quotient = decimalNum >>> 1;
+
+			// 2. Check remainder and add '1' or '0'
+			if (decimalNum % 2 != 0) {
+				binaryStr = '1' + binaryStr;
+			} else {
+				binaryStr = '0' + binaryStr;
+			}
+
+			decimalNum = quotient;
+
+			// 3. Repeat until number is 0
+		} while (decimalNum != 0);
+
+		return binaryStr;
+	}
+
+	int convertBinaryStringToDecimalInt(String binStr) {
 		StringBuilder sb = new StringBuilder(binStr);
 		sb.reverse();
 		String binStr2 = sb.toString();
@@ -79,47 +114,46 @@ public class _02_Rotate {
 		int power = 1;
 		for (int i = 0; i < bits.length; i++) {
 			if (bits[i].equals("1")) {
-				num+=power;
+				num += power;
+			} else if (bits[i].equals("0")) {
+				num += 0;
 			}
-			else if (bits[i].equals("0")){
-				num+=0;
-			}
-			power = power*2;
+			power = power * 2;
 		}
 		return num;
 	}
-    
-    @Test
-    void testRotateLeft() {
-        int i = -8;
 
-        int result = rotateLeft(i, 1);
-        System.out.println("Left rotate tests");
-        System.out.println("Expected: " + Integer.toBinaryString(-15));
-        System.out.println("Actual  : " + Integer.toBinaryString(result));
-        assertEquals(-15, result);
-        
-        result = rotateLeft(i, 3);
-        System.out.println();
-        System.out.println("Expected: " + Integer.toBinaryString(-57));
-        System.out.println("Actual  : " + Integer.toBinaryString(result));
-        assertEquals(-57, result);
-    }
-    
-    @Test
-    void testRotateRight() {
-        int i = 7;
-        
-        int result = rotateRight(i, 1);
-        System.out.println("\nRight rotate tests");
-        System.out.println("Expected: " + Integer.toBinaryString(-2147483645));
-        System.out.println("Actual  : " + Integer.toBinaryString(result));
-        assertEquals(-2147483645, result);
-        
-        result = rotateRight(i, 16);
-        System.out.println();
-        System.out.println("Expected: " + Integer.toBinaryString(458752));
-        System.out.println("Actual  : " + Integer.toBinaryString(result));
-        assertEquals(458752, result);
-    }
+	@Test
+	void testRotateLeft() {
+		int i = -8;
+
+		int result = rotateLeft(i, 1);
+		System.out.println("Left rotate tests");
+		System.out.println("Expected: " + Integer.toBinaryString(-15));
+		System.out.println("Actual  : " + Integer.toBinaryString(result));
+		assertEquals(-15, result);
+
+		result = rotateLeft(i, 3);
+		System.out.println();
+		System.out.println("Expected: " + Integer.toBinaryString(-57));
+		System.out.println("Actual  : " + Integer.toBinaryString(result));
+		assertEquals(-57, result);
+	}
+
+	@Test
+	void testRotateRight() {
+		int i = 7;
+
+		int result = rotateRight(i, 1);
+		System.out.println("\nRight rotate tests");
+		System.out.println("Expected: " + Integer.toBinaryString(-2147483645));
+		System.out.println("Actual  : " + Integer.toBinaryString(result));
+		assertEquals(-2147483645, result);
+
+		result = rotateRight(i, 16);
+		System.out.println();
+		System.out.println("Expected: " + Integer.toBinaryString(458752));
+		System.out.println("Actual  : " + Integer.toBinaryString(result));
+		assertEquals(458752, result);
+	}
 }
