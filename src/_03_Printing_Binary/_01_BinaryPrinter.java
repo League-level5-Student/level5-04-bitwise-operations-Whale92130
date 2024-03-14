@@ -39,10 +39,10 @@ public class _01_BinaryPrinter {
         // s in the other byte
         // Call printByteBinary twice using the two bytes
         // Make sure they are in the correct order
-    	byte first8bits = (byte) (s>>8);
-    	byte last8bits = (byte) (s&(255));
-		printByteBinary(first8bits);
-    	printByteBinary(last8bits);
+    	byte high = (byte) (s>>8);
+    	byte low = (byte) (s&(255));
+		printByteBinary(high);
+    	printByteBinary(low);
     }
 
     public static void printIntBinary(int i) {
@@ -51,16 +51,21 @@ public class _01_BinaryPrinter {
         // Use bit shifting and masking (&) to save the first
         // 16 bits of i in one short, and the second 16 bits of
         // i in the other short
-    	short first16bits = (short) (i>>16);
-    	short last16bits = (short) (i&());
+    	short high = (short) (i>>16);
+    	short low = (short) (i&(65535));
         // Call printShortBinary twice using the two short variables
         // Make sure they are in the correct order
-    	printShortBinary(first16bits);
-    	printShortBinary(last16bits);
+    	printShortBinary(high);
+    	printShortBinary(low);
+    	
     }
 
-    public void printLongBinary(long l) {
+    public static void printLongBinary(long l) {
         // Use the same method as before to complete this method
+    	int high = (int) (l>>16);
+    	int low = (int) (l&(2147483646));
+    	printIntBinary(high);
+    	printIntBinary(low);
     }
 
     public static void main(String[] args) {
@@ -70,6 +75,8 @@ public class _01_BinaryPrinter {
     	Short s = 513;
     	//printShortBinary(s);
     	int i = 2049;
-    	printIntBinary(i);
+    	//printIntBinary(i);
+    	long l = 2147483646;
+    	printLongBinary(l);
     }
 }
