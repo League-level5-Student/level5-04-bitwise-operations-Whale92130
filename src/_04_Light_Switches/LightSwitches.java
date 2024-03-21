@@ -55,7 +55,15 @@ public class LightSwitches implements GameControlScene {
      * index = 6        // return true if pink is on (bit 6 == 1)
      */
     boolean isLightOn(int index) {
-        return false;
+    	int index2 = (int) Math.pow(2, index);
+    	int light = lightsOnOff&index2;
+    	if (light >= 1) {
+    		  return true;
+    	}
+    	else {
+    		return false;
+    	}
+      
     }
     
     /*
@@ -63,7 +71,8 @@ public class LightSwitches implements GameControlScene {
      * index = 4        // turn off yellow only (set bit 4 = 1)
      */
     void turnLightOn(int index) {
-        
+        byte indexInBits = (byte) Math.pow(2,index);  
+        lightsOnOff |= indexInBits;
     }
     
     /*
@@ -71,7 +80,8 @@ public class LightSwitches implements GameControlScene {
      * index = 0        // turn off blue only (set bit 0 = 0)
      */
     void turnLightOff(int index) {
-        
+    	byte indexInBits = (byte) Math.pow(2,index);
+        lightsOnOff = ~(lightsOnOff|indexInBits);
     }
     
     /*
@@ -79,7 +89,7 @@ public class LightSwitches implements GameControlScene {
      * lightsBitmap = 0b01100110  // lights 1, 2, 5, 6 on
      */
     void turnMultiLightsOn(int lightsBitmap) {
-        
+    	lightsOnOff |= lightsBitmap;
     }
     
     /*
@@ -87,7 +97,7 @@ public class LightSwitches implements GameControlScene {
      * lightsBitmap = 0b10000001  // lights 0, 7 off
      */
     void turnMultiLightsOff(int lightsBitmap) {
-        
+    	lightsOnOff = ~(lightsOnOff|lightsBitmap);
     }
     
     /*
@@ -100,7 +110,7 @@ public class LightSwitches implements GameControlScene {
      *                               orange(3) and yellow(4) on
      */
     void toggleLights(int lightsBitmap) {
-        
+        lightsOnOff^=lightsBitmap;
     }
     
     void runLightSequence1() {
@@ -169,10 +179,18 @@ public class LightSwitches implements GameControlScene {
         
         workQueue = new ArrayDeque<Runnable>();
         
-        runLightSequence1();
-        runLightSequence2();
-        runLightSequence3();
-        runLightSequence4();
+        System.out.println(isLightOn(3));
+        System.out.println(lightsOnOff);
+        turnLightOn(5);
+        System.out.println(lightsOnOff);
+        turnLightOff(5);
+        System.out.println(lightsOnOff);
+        //turn light off not working
+        //the not is noting all of them
+//        runLightSequence1();
+//        runLightSequence2();
+//        runLightSequence3();
+//        runLightSequence4();
     }
 
     @Override
