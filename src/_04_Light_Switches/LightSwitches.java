@@ -80,8 +80,9 @@ public class LightSwitches implements GameControlScene {
      * index = 0        // turn off blue only (set bit 0 = 0)
      */
     void turnLightOff(int index) {
-    	byte indexInBits = (byte) Math.pow(2,index);
-        lightsOnOff = ~(lightsOnOff|indexInBits);
+    	int indexInBits = (int) Math.pow(2,index);
+    	indexInBits=~(indexInBits);
+        lightsOnOff = (lightsOnOff&indexInBits);
     }
     
     /*
@@ -97,7 +98,8 @@ public class LightSwitches implements GameControlScene {
      * lightsBitmap = 0b10000001  // lights 0, 7 off
      */
     void turnMultiLightsOff(int lightsBitmap) {
-    	lightsOnOff = ~(lightsOnOff|lightsBitmap);
+    	lightsBitmap=~(lightsBitmap);
+    	lightsOnOff = (lightsOnOff&lightsBitmap);
     }
     
     /*
@@ -179,18 +181,18 @@ public class LightSwitches implements GameControlScene {
         
         workQueue = new ArrayDeque<Runnable>();
         
-        System.out.println(isLightOn(3));
-        System.out.println(lightsOnOff);
-        turnLightOn(5);
-        System.out.println(lightsOnOff);
-        turnLightOff(5);
-        System.out.println(lightsOnOff);
+//        System.out.println(isLightOn(3));
+//        System.out.println(lightsOnOff);
+//        turnLightOn(5);
+//        System.out.println(lightsOnOff);
+//        turnLightOff(5);
+//        System.out.println(lightsOnOff);
         //turn light off not working
         //the not is noting all of them
-//        runLightSequence1();
-//        runLightSequence2();
-//        runLightSequence3();
-//        runLightSequence4();
+        runLightSequence1();
+        runLightSequence2();
+        runLightSequence3();
+        runLightSequence4();
     }
 
     @Override
