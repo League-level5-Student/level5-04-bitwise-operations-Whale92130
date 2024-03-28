@@ -69,25 +69,30 @@ public class Base64Decoder {
     //   characters long and return an array of 3 bytes (24 bits). The byte
     //   array should be the binary value of the encoded characters.
     public static byte[] convert4CharsTo24Bits(String s) {
-        if (s.length() != 4)
-            throw new IllegalArgumentException("Input string must be 4 characters long.");
-
         byte[] result = new byte[3];
-
-        // Convert each character to binary and concatenate them
+        
         String binaryString = "";
         for (int i = 0; i < s.length(); i++) {
-            // Convert char to 8-bit binary string
-            String charBinary = String.format("%8s", Integer.toBinaryString(s.charAt(i))).replace(' ', '0');
-            binaryString += charBinary;
+        	byte index = -1;
+        	for (int o = 0; o < base64Chars.length; o++) {
+        		if (s.charAt(i) == base64Chars[o]) {
+        			index = (byte) o;
+        		}
+        	}
+        	String add = Integer.toBinaryString(index);
+        	while (add.length() < 6) {
+        		add = "0" + add;
+        	}
+        	binaryString = binaryString + add;
         }
-
-        // Split the binary string into 3 parts of 8 bits each and parse them into bytes
         for (int i = 0; i < 3; i++) {
-            String part = binaryString.substring(i * 8, (i + 1) * 8);
+            String part = binaryString.substring(i * 8, ((8*i)+8));
             result[i] = (byte) Integer.parseInt(part, 2);
         }
-
+        System.out.println(binaryString);
+        for(int i = 0 ; i < result.length; i++) {
+        	System.out.println(result[i]);
+        }
         return result;
     }
 
